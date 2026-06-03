@@ -31,4 +31,4 @@ const eventSchema = new mongoose.Schema({
 
 eventSchema.index({ availableTickets: 1 });
 
-module.exports = mongoose.model('Event', EventSchema);
+module.exports = mongoose.model('Event', eventSchema);
