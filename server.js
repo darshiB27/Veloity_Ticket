@@ -1,8 +1,7 @@
-// http://localhost:8080/health
 const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
-const userRoutes = require('./routes/userRoutes');
+const userRoutes = require('./routes/userRoutes');const ticketRoutes = require('./routes/ticketRoutes');
 
 dotenv.config();
 connectDB();
@@ -12,6 +11,7 @@ const app = express();
 app.use(express.json());
 
 app.use('/api/users', userRoutes);
+app.use('/api/tickets', ticketRoutes);
 
 app.get('/health', (req, res) => {
     res.status(200).json({ status: 'active', message: 'Velocity_Ticket Engine Running' });
