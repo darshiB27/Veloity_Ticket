@@ -1,10 +1,12 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const { connectRedis } = require('./config/redis');
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');const ticketRoutes = require('./routes/ticketRoutes');
 
 dotenv.config();
 connectDB();
+connectRedis();
 
 const app = express();
 
