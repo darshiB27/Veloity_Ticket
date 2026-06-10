@@ -1,14 +1,11 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
-// Load environment variables
 dotenv.config();
 
-// Load models
 const User = require('./models/User');
 const Event = require('./models/Event');
 
-// Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('📡 Database Connected for Seeding...'))
     .catch(err => {
@@ -16,20 +13,18 @@ mongoose.connect(process.env.MONGO_URI)
         process.exit(1);
     });
 
-// Generate 100 Mock Users dynamically
 const generateUsers = () => {
     const users = [];
     for (let i = 1; i <= 100; i++) {
         users.push({
             name: `Test User ${i}`,
             email: `user${i}@example.com`,
-            password: `password123` // We will hash this once we add bcrypt middleware
+            password: `password123` 
         });
     }
     return users;
 };
 
-// Define 5 Mock Events
 const mockEvents = [
     {
         title: "TechSprint Hackathon 2026",
@@ -50,7 +45,7 @@ const mockEvents = [
         description: "Mastering high-performance backend routing and complex MongoDB pipelines.",
         eventDate: new Date("2026-06-25"),
         totalTickets: 50,
-        availableTickets: 50 // Perfect small volume event for testing race conditions later!
+        availableTickets: 50 
     },
     {
         title: "AI Predictive Modeling Summit",
@@ -68,25 +63,21 @@ const mockEvents = [
     }
 ];
 
-// Core Seeder Execution Logic
 const importData = async () => {
     try {
-        // Clear out current records to start fresh
         await User.deleteMany();
         await Event.deleteMany();
         console.log('🗑️ Existing data purged from database...');
 
-        // Insert new data
         await User.insertMany(generateUsers());
         await Event.insertMany(mockEvents);
 
         console.log('✅ 100 Users and 5 High-Demand Events successfully seeded!');
-        process.exit(0); // Exit cleanly
+        process.exit(0); 
     } catch (error) {
         console.error(`❌ Data Import Failed: ${error.message}`);
         process.exit(1);
     }
 };
 
-// Run the script
 importData();
