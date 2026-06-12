@@ -110,7 +110,7 @@ const bookTicket = async (req, res) => {
             { 
                 $inc: { availableTickets: -1, __v: 1 } 
             },
-            { new: true } 
+            { returnDocument: 'after' } 
         );
 
         if (!updatedEvent) {
