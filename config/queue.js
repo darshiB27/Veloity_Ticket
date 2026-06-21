@@ -8,11 +8,13 @@ const redisConnection = {
 const ticketQueue = new Queue('ticketQueue', {
     connection: redisConnection,
     defaultJobOptions: {
-        attempts: 3,
+        attempts: 5,
         backoff: {
             type: 'exponential',
             delay: 1000
-        }
+        },
+        removeOnComplete: true,
+        removeOnFail: false
     }
 });
 
