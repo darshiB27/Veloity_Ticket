@@ -12,17 +12,25 @@ const ticketWorker = new Worker('ticketQueue', async (job) => {
     console.log(`🏭 Worker processing Job [${job.id}] for User ${userId}`);
 
     try {
+        const existingTicket = await Ticket.findOne({ user: userId, event: eventId });
+        if (existingTicket) {
+            console.log(`⚠️ Idempotency Triggered: User ${userId} already has a ticket booked. Skipping job duplication.`);
+            return { status: 'duplicate', ticketId: existingTicket._id };
+        }
+
         const event = await Event.findById(eventId);
         if (!event) {
             throw new Error(`Event ${eventId} no longer exists.`);
         }
+
         if (event.availableTickets <= 0) {
             console.log(`🚫 Job [${job.id}] Failed: ${event.title} is sold out.`);
             return { status: 'failed', reason: 'Sold out' };
         }
+
         event.availableTickets -= 1;
         await event.save();
-        
+
         const ticket = await Ticket.create({
             user: userId,
             event: eventId
@@ -37,9 +45,7 @@ const ticketWorker = new Worker('ticketQueue', async (job) => {
     }
 }, {
     connection: redisConnection,
-    concurrency: 1
+    concurrency: 1 
 });
-
-console.log('👷 Background Ticket Worker activated and polling Redis line...');
 
 module.exports = ticketWorker;
