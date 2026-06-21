@@ -1,3 +1,5 @@
+require('./config/queue');
+
 const express = require('express');
 const dotenv = require('dotenv');
 const { connectRedis } = require('./config/redis');
