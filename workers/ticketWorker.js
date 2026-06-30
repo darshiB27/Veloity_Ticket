@@ -1,6 +1,7 @@
 const { Worker } = require('bullmq');
 const Event = require('../models/Event');
 const Ticket = require('../models/Ticket');
+const transporter = require('../config/mailer');
 
 const redisConnection = {
     host: process.env.REDIS_HOST || '127.0.0.1',
@@ -37,6 +38,28 @@ const ticketWorker = new Worker('ticketQueue', async (job) => {
         });
 
         console.log(`✅ Ticket successfully compiled for User ${userId} (Ticket ID: ${ticket._id})`);
+
+        const mailOptions = {
+            from: '"Velocity Ticket Gate" <noreply@velocityticket.com>',
+            to: 'testuser@example.com',
+            subject: `🎟️ Ticket Confirmed: ${event.title}`,
+            text: `Hi there! Your order is secured. Your unique Ticket Registration ID is: ${ticket._id}. See you at the venue!`,
+            html: `
+                <div style="font-family: sans-serif; padding: 20px; border: 1px solid #ddd; max-width: 500px;">
+                    <h2 style="color: #2b6cb0;">Order Confirmed! 🎟️</h2>
+                    <p>Your transaction has been processed securely via our automated queue.</p>
+                    <hr/>
+                    <p><strong>Event:</strong> ${event.title}</p>
+                    <p><strong>Ticket ID:</strong> <code style="background: #f7fafc; padding: 4px;">${ticket._id}</code></p>
+                    <hr/>
+                    <p style="font-size: 12px; color: #718096;">Thank you for booking with Velocity Ticket Engine.</p>
+                </div>
+            `
+        };
+
+        const mailInfo = await transporter.sendMail(mailOptions);
+        console.log(`📨 Mail Delivered: Preview URL -> ${nodemailer.getTestMessageUrl(mailInfo)}`);
+
         return { status: 'completed', ticketId: ticket._id };
 
     } catch (error) {
