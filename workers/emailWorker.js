@@ -38,7 +38,7 @@ const emailWorker = new Worker('emailQueue', async (job) => {
     }
 }, {
     connection: redisConnection,
-    concurrency: 2 
+    concurrency: 5
 });
 
 console.log('👷 Standalone Email Worker activated and listening for chained triggers...');

@@ -8,7 +8,7 @@ const generateMockId = () => {
 };
 
 const runDynamicLoadTest = () => {
-    const targetEventId = "6a382d891a333f99eba46c50"; 
+    const targetEventId = "6a450fb952948c9ec14b8e42"; 
 
     console.log('🚀 Setting up dynamic, multi-user high-concurrency stream...');
 
