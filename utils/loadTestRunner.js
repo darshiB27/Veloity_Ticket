@@ -1,27 +1,23 @@
 const autocannon = require('autocannon');
-const mongoose = require('mongoose');
+const crypto = require('crypto');
 
-const generateMockId = () => {
-    const timestamp = Math.floor(Date.now() / 1000).toString(16).padStart(8, '0');
-    const randomHex = Array.from({ length: 16 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
-    return timestamp + randomHex;
-};
+const generateMockId = () => crypto.randomBytes(12).toString('hex');
 
 const runDynamicLoadTest = () => {
-    const targetEventId = "6a450fb952948c9ec14b8e3f"; 
-
     console.log('🚀 Setting up dynamic, multi-user high-concurrency stream...');
 
     const instance = autocannon({
         url: 'http://localhost:8080/api/tickets/book',
-        connections: 500,     
-        duration: 10,      
+        connections: 500,    
+        duration: 10,       
         method: 'POST',
-        headers: { 'content-type': 'application/json' },
+        headers: {
+            'content-type': 'application/json'
+        },
         setupClient: (client) => {
             client.setBody(JSON.stringify({
                 userId: generateMockId(),
-                eventId: "6a4560e1424903bb6a93d2ce" 
+                eventId: "6a4560e1424903bb6a93d2cd" 
             }));
             return client;
         }
@@ -29,7 +25,7 @@ const runDynamicLoadTest = () => {
         if (err) {
             console.error(`❌ Load Runner Error: ${err.message}`);
         } else {
-            console.log('📊 Autocannon High-Concurrency Simulation Complete!');
+            console.log('\n📊 Autocannon High-Concurrency Simulation Complete!');
             console.log(`✨ Total Requests Sent: ${result.requests.sent}`);
             console.log(`✅ Total Successful 202 Staging Responses: ${result['2xx']}`);
         }
