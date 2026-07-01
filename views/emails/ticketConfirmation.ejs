@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f7fafc; margin: 0; padding: 40px; }
+        .card { background: #ffffff; padding: 30px; border-radius: 8px; max-width: 500px; margin: 0 auto; border: 1px solid #e2e8f0; }
+        .header { color: #2b6cb0; border-bottom: 2px solid #e2e8f0; padding-bottom: 15px; margin-bottom: 20px; }
+        .details { background: #edf2f7; padding: 15px; border-radius: 6px; margin: 20px 0; }
+        .code { font-family: monospace; background: #fff; padding: 4px 8px; border: 1px solid #cbd5e0; border-radius: 4px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2 class="header">Order Confirmed! ✅ </h2>
+        <p>Great news! Your ticket request has cleared our automated processing queue safely.</p>
+        <div class="details">
+            <p><strong>Event Platform:</strong> <%= eventName %></p>
+            <p><strong>Secure Ticket ID:</strong> <span class="code"><%= ticketId %></span></p>
+        </div>
+        <p>Please keep this ID handy at check-in.Thank you for booking with Velocity Ticket Engine. See you at the venue!</p>
+    </div>
+</body>
+</html>
