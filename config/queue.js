@@ -18,6 +18,18 @@ const ticketQueue = new Queue('ticketQueue', {
     }
 });
 
+const emailQueue = new Queue('emailQueue', {
+    connection: redisConnection,
+    defaultJobOptions: {
+        attempts: 5,              
+        backoff: {
+            type: 'exponential',
+            delay: 2000            
+        },
+        removeOnComplete: true    
+    }
+});
+
 console.log('📦 BullMQ: Ticket pipeline queue cleanly initialized.');
 
-module.exports = { ticketQueue };
+module.exports = { ticketQueue ,emailQueue };

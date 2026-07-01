@@ -1,5 +1,6 @@
 require('./config/queue.js');
 require('./workers/ticketWorker.js');
+require('./workers/emailWorker');
 
 const express = require('express');
 const dotenv = require('dotenv');
