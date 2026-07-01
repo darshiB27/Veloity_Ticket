@@ -14,18 +14,14 @@ const runDynamicLoadTest = () => {
 
     const instance = autocannon({
         url: 'http://localhost:8080/api/tickets/book',
-        connections: 200,     
-        duration: 5,      
+        connections: 500,     
+        duration: 10,      
         method: 'POST',
-        headers: {
-            'content-type': 'application/json'
-        },
-
+        headers: { 'content-type': 'application/json' },
         setupClient: (client) => {
-            const randomUserId = generateMockId(); 
             client.setBody(JSON.stringify({
-                userId: randomUserId,
-                eventId: targetEventId
+                userId: generateMockId(),
+                eventId: "6a4560e1424903bb6a93d2ce" 
             }));
             return client;
         }
