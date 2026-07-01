@@ -2,15 +2,14 @@ const { Worker } = require('bullmq');
 const path = require('path');
 const ejs = require('ejs');
 const mailTransporter = require('../config/mailer');
-
-const redisConnection = {
-    host: process.env.REDIS_HOST || '127.0.0.1',
-    port: process.env.REDIS_PORT || 6379
-};
+const redisConfig = require('../config/redis');
 
 const emailWorker = new Worker('emailQueue', async (job) => {
     const { recipientEmail, eventName, ticketId } = job.data;
-    console.log(`📬 Email-Worker draining Job [${job.id}] – Preparing template for ${recipientEmail}`);
+
+    if (process.env.NODE_ENV !== 'production') {
+        console.log(`📬 Email-Worker draining Job [${job.id}] – Preparing template for ${recipientEmail}`);
+    }
 
     try {
         const templatePath = path.join(__dirname, '../views/emails/ticketConfirmation.ejs');
@@ -37,7 +36,7 @@ const emailWorker = new Worker('emailQueue', async (job) => {
         throw error; 
     }
 }, {
-    connection: redisConnection,
+    connection: redisConfig,
     concurrency: 5
 });
 

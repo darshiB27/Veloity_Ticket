@@ -1,4 +1,5 @@
 const { Queue } = require('bullmq');
+const { redisConfig } = require('./redis');
 
 const redisConnection = {
     host: process.env.REDIS_HOST || '127.0.0.1',
@@ -6,7 +7,7 @@ const redisConnection = {
 };
 
 const ticketQueue = new Queue('ticketQueue', {
-    connection: redisConnection,
+    connection: redisConfig,
     defaultJobOptions: {
         attempts: 5,
         backoff: {

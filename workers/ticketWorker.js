@@ -2,6 +2,7 @@ const { Worker } = require('bullmq');
 const { emailQueue } = require('../config/queue');
 const Event = require('../models/Event');
 const Ticket = require('../models/Ticket');
+const redisConfig = require('../config/redis');
 
 const redisConnection = {
     host: process.env.REDIS_HOST || '127.0.0.1',
@@ -10,7 +11,10 @@ const redisConnection = {
 
 const ticketWorker = new Worker('ticketQueue', async (job) => {
     const { userId, eventId } = job.data;
-    console.log(`🏭 Worker processing Job [${job.id}] for User ${userId}`);
+
+    if (process.env.NODE_ENV !== 'production') {
+        console.log(`🏭 Worker processing Job [${job.id}] for User ${userId}`);
+    }
 
     try {
         const existingTicket = await Ticket.findOne({ user: userId, event: eventId });
