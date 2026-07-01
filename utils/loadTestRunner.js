@@ -17,7 +17,7 @@ const runDynamicLoadTest = () => {
         setupClient: (client) => {
             client.setBody(JSON.stringify({
                 userId: generateMockId(),
-                eventId: "6a4560e1424903bb6a93d2cd" 
+                eventId: "<enter valid event id>" 
             }));
             return client;
         }
