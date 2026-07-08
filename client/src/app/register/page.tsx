@@ -15,18 +15,28 @@ export default function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [emailError, setEmailError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    setIsLoading(true);
+    setEmailError('');
 
+    // 🔍 Your exact specified Email Regex rule parsing pattern 
+    const emailRegex = /^[^@]+@[^@.]+\.[a-zA-Z0-9]{2,}$/;
+
+    if (!emailRegex.test(email)) {
+      setEmailError('Please enter a valid format (e.g., username@domain.com).');
+      return;
+    }
+
+    setIsLoading(true);
     try {
       await apiClient.post('/auth/register', { name, email, password });
       router.push('/login');
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Registration sequence aborted. Please check your data fields.');
+      setError(err.response?.data?.message || 'Registration sequence aborted.');
     } finally {
       setIsLoading(false);
     }
@@ -39,7 +49,7 @@ export default function RegisterPage() {
 
         <div className="flex items-center gap-3 mb-6">
           <UserPlus className="w-6 h-6 text-mist" />
-          <h2 className="text-2xl font-bold text-mist tracking-tight">Register Gate</h2>
+          <h2 className="text-2xl font-bold text-mist tracking-tight">Register here</h2>
         </div>
 
         {error && (
@@ -55,15 +65,19 @@ export default function RegisterPage() {
             value={name} 
             onChange={(e) => setName(e.target.value)} 
             required 
-            placeholder="John Doe" 
+            placeholder="Darshika Bhasker" 
           />
           <Input 
             label="Email Address" 
             type="email" 
             value={email} 
-            onChange={(e) => setEmail(e.target.value)} 
+            onChange={(e) => {
+              setEmail(e.target.value);
+              if(emailError) setEmailError(''); 
+            }} 
+            error={emailError}
             required 
-            placeholder="you@example.com" 
+            placeholder="Darshika@bhasker.com" 
           />
           <Input 
             label="Password" 
@@ -71,7 +85,7 @@ export default function RegisterPage() {
             value={password} 
             onChange={(e) => setPassword(e.target.value)} 
             required 
-            placeholder="Minimum 6 characters" 
+            placeholder="••••••••••••" 
           />
           
           <Button 
