@@ -1,8 +1,11 @@
 const User = require('../models/User');
+const jwt = require('jsonwebtoken');
 
-// @desc    Register a new user
-// @route   POST /api/users/register
-// @access  Public
+const generateToken = (id) => {
+    return jwt.sign({ id }, process.env.JWT_SECRET || 'fallback_secret_key', {
+        expiresIn: '30d',
+    });
+};
 
 const registerUser = async (req, res) => {
     try {
@@ -23,7 +26,6 @@ const registerUser = async (req, res) => {
             });
         }
 
-        // Note: In Week 4, we will introduce a pre-save hook to hash this password using bcrypt!
         const user = await User.create({
             name,
             email,
@@ -50,6 +52,36 @@ const registerUser = async (req, res) => {
     }
 };
 
+const loginUser = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        const user = await User.findOne({ email });
+        
+        if (user && (await user.matchPassword(password))) {
+            return res.json({
+                success: true,
+                token: generateToken(user._id),
+                user: {
+                    id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    role: user.role
+                }
+            });
+        } else {
+            return res.status(401).json({ 
+                success: false, 
+                message: 'Invalid authorization credentials provided.' 
+            });
+        }
+    } catch (error) {
+        console.error(`❌ Login Error: ${error.message}`);
+        res.status(500).json({ success: false, message: 'Server error during login authentication' });
+    }
+};
+
 module.exports = {
-    registerUser
+    registerUser,
+    loginUser
 };

@@ -4,9 +4,12 @@ require('./workers/emailWorker');
 
 const express = require('express');
 const dotenv = require('dotenv');
+const cors = require('cors');
+
 const { connectRedis } = require('./config/redis');
 const connectDB = require('./config/db');
-const userRoutes = require('./routes/userRoutes');const ticketRoutes = require('./routes/ticketRoutes');
+const userRoutes = require('./routes/userRoutes');
+const ticketRoutes = require('./routes/ticketRoutes');
 
 dotenv.config();
 connectDB();
@@ -14,9 +17,14 @@ connectRedis();
 
 const app = express();
 
+app.use(cors({
+    origin: 'http://localhost:3000', 
+    credentials: true
+}));
+
 app.use(express.json());
 
-app.use('/api/users', userRoutes);
+app.use('/api/auth', userRoutes);
 app.use('/api/tickets', ticketRoutes);
 
 app.get('/health', (req, res) => {
