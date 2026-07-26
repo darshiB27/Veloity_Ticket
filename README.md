@@ -1,10 +1,10 @@
-# 🎟️ Velocity Ticket
+# Velocity Ticket
 
 **Velocity Ticket** is a high-concurrency event ticketing platform designed to handle flash-sale-style demand without overselling. It uses a distributed job queue and locking layer to process booking requests safely, even when hundreds of users try to grab the last few seats at the same time.
 
 ---
 
-## ✨ Features
+## Features
 
 - **Event Explorer** — browse upcoming events with live capacity and available-slot tracking
 - **Race-condition-safe booking** — booking requests are queued (not processed synchronously), so seat inventory is never double-allocated under load
@@ -15,7 +15,7 @@
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 Browser (Next.js client)
@@ -36,7 +36,7 @@ Ticket status endpoint (polled by client)
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Velocity_Ticket/
@@ -72,7 +72,7 @@ Velocity_Ticket/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 - Node.js (v18+ recommended)
@@ -128,7 +128,7 @@ Visit `http://localhost:3000`.
 
 ---
 
-## 🧪 Load Testing
+## Load Testing
 
 `utils/loadTestRunner.js` simulates many concurrent booking requests against a single event to verify the locking/queue layer prevents overselling. Run it with:
 ```bash
@@ -137,7 +137,7 @@ node utils/loadTestRunner.js
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -149,13 +149,10 @@ node utils/loadTestRunner.js
 
 ---
 
-## 📌 Roadmap Ideas
+## Roadmap Ideas
 - [ ] Admin dashboard for event management
 - [ ] Seat-map style selection instead of general admission
 - [ ] Payment gateway integration
 - [ ] Rate limiting on booking endpoint
 
 ---
-
-## 📄 License
-Add your preferred license here (MIT, Apache-2.0, etc.)
