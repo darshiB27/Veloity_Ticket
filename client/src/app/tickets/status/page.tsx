@@ -20,7 +20,6 @@ function StatusContent() {
       setMessage('BullMQ pipeline processing. Awaiting database verification write...');
     }, 1500);
 
-    // Phase 2: Since your backend compiles the ticket instantly, resolve to success!
     const successTimeout = setTimeout(() => {
       setStatus('completed');
     }, 3000);

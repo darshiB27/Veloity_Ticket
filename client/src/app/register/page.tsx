@@ -93,7 +93,7 @@ export default function RegisterPage() {
             isLoading={isLoading} 
             className="w-full mt-2 bg-maroon hover:bg-maroon-hover border border-maroon-hover text-mist"
           >
-            Register Base Account
+            Register Account
           </Button>
         </form>
 
