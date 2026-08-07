@@ -37,7 +37,7 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-void px-4">
       <div className="w-full max-w-md bg-void border border-knight/20 p-8 rounded-2xl shadow-2xl relative overflow-hidden">
-        {/* Visual premium geometric design accents using Dark Maroon tint blocks */}
+        
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-maroon to-maroon-hover" />
         
         <div className="flex items-center gap-3 mb-6">
