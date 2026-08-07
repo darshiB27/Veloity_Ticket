@@ -15,7 +15,6 @@ function StatusContent() {
   const [message, setMessage] = useState('Positioning worker nodes in distributed queue...');
 
   useEffect(() => {
-    // Phase 1: Simulate the high-concurrency message transition
     const messageTimeout = setTimeout(() => {
       setMessage('BullMQ pipeline processing. Awaiting database verification write...');
     }, 1500);
