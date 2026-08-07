@@ -23,7 +23,6 @@ export default function RegisterPage() {
     setError('');
     setEmailError('');
 
-    // 🔍 Your exact specified Email Regex rule parsing pattern 
     const emailRegex = /^[^@]+@[^@.]+\.[a-zA-Z0-9]{2,}$/;
 
     if (!emailRegex.test(email)) {
