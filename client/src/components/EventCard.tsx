@@ -30,7 +30,6 @@ export const EventCard: React.FC<EventCardProps> = ({ event, onSelect }) => {
 
   return (
     <div className="w-full bg-void border border-knight/10 rounded-xl overflow-hidden shadow-lg hover:border-knight/30 transition-all duration-300 flex flex-col justify-between relative group">
-      {/* Top indicator bar for availability states */}
       <div className={`h-1 w-full ${
         isSoldOut ? 'bg-red-500' : isLowStock ? 'bg-amber-500' : 'bg-maroon'
       }`} />
