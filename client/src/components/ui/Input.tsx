@@ -12,7 +12,6 @@ export const Input: React.FC<InputProps> = ({ label, error, type, className = ''
   const [showPassword, setShowPassword] = useState(false);
   const isPasswordType = type === 'password';
 
-  // Determine actual runtime input behavior string based on state
   const runtimeType = isPasswordType && showPassword ? 'text' : type;
 
   return (
@@ -31,7 +30,6 @@ export const Input: React.FC<InputProps> = ({ label, error, type, className = ''
           } ${className}`}
         />
         
-        {/* Render interactive eye icon button exclusively on password formats */}
         {isPasswordType && (
           <button
             type="button"
