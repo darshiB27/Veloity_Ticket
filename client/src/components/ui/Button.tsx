@@ -1,5 +1,7 @@
 import React from 'react';
 
+{/* Button component */}
+
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
   variant?: 'primary' | 'secondary' | 'danger';
