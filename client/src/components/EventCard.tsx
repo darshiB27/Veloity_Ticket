@@ -1,5 +1,7 @@
 "use client";
 
+{/* Event Card Component */}
+
 import React from 'react';
 import { Calendar, Tag, Users } from 'lucide-react';
 import { Button } from './ui/Button';
